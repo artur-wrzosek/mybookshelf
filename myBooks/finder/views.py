@@ -370,16 +370,17 @@ class BookDetailView(DetailView):
         context['details'] = model_to_dict(self.object, )
         context['details']['added_by'] = self.object.added_by
         context['details']['publisher'] = getattr(self.object, 'publisher')
-        try:
-            vote = self.object.vote_set.get(profile=self.request.user.profile, book=self.object.id)
-            context['vote_form'] = forms.VoteForm(data={'value': vote.value})
-        except ObjectDoesNotExist:
-            context['vote_form'] = forms.VoteForm()
+        if self.request.user.is_authenticated:
+            try:
+                vote = self.object.vote_set.get(profile=self.request.user.profile, book=self.object.id)
+                context['vote_form'] = forms.VoteForm(data={'value': vote.value})
+            except ObjectDoesNotExist:
+                context['vote_form'] = forms.VoteForm()
 
-        if self.object in self.request.user.profile.books.all():
-            context['owned_form'] = forms.ProfileBooksOwnedForm(data={'owned': True})
-        else:
-            context['owned_form'] = forms.ProfileBooksOwnedForm(data={'owned': False})
+            if self.object in self.request.user.profile.books.all():
+                context['owned_form'] = forms.ProfileBooksOwnedForm(data={'owned': True})
+            else:
+                context['owned_form'] = forms.ProfileBooksOwnedForm(data={'owned': False})
         return context
 
 
