@@ -1,0 +1,134 @@
+<div class="card mb-3" id="card_{{ book.gbooks_id }}">
+    <div class="card-header h3 position-relative rounded-0">
+        <div class="row">
+            <div class="col text-center">
+                <a class="stretched-link" href="{% url 'gbooks-detail' book.gbooks_id %}">
+                    {{ book.title|truncatechars:30 }}
+                </a>
+            </div>
+
+
+        </div>
+    </div>
+
+    <div class="card-body p-0" >
+        <div class="row my-3">
+            <div class="col mx-3" style="max-width: 128px;">
+                <a href="{% url 'gbooks-list'}">
+                    <img src="{% if book.thumbnail %}{{ book.thumbnail }}{% else %}https://books.google.pl/googlebooks/images/no_cover_thumb.gif{% endif %}"
+                 style="min-width: 128px;"
+                 class="float-start shadow"  alt="">
+                </a>
+            </div>
+            <div class="col">
+                <div class="row row-cols-2 g-3">
+                    <div class="col-auto">
+                        <span class="badge text-end" style="width: 100px">
+                            Title :
+                        </span>
+                    </div>
+                    <div class="col">
+                        <a class="btn badge" href="{% url 'gbooks-detail' book.gbooks_id %}">
+                            {{ book.title|truncatechars:30 }}
+                        </a>
+                    </div>
+
+                </div>
+                <div class="row row-cols-2 g-3">
+                    <div class="col-auto">
+                        <span class="badge text-end" style="width: 100px">
+                            Authors :
+                        </span>
+                    </div>
+                    <div class="col">
+                        {% if book.authors %}
+                            {% for author in book.authors  %}
+                                <div class="badge">
+                                    {{ author|truncatechars:30 }}
+                                </div>
+                            {% endfor %}
+                        {% else %}
+                            ...empty...
+                        {% endif %}
+                    </div>
+
+                </div>
+
+                <div class="row row-cols-2 g-3">
+                    <div class="col-auto">
+                        <span class="badge text-end" style="width: 100px">
+                            Publisher:
+                        </span>
+                    </div>
+                    <div class="col">
+                        {% if book.publisher %}
+                             <div class="badge">
+                                 {{ book.publisher|truncatechars:30 }}
+                             </div>
+                        {% else %}
+                            ...empty...
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="row row-cols-2 g-3">
+                    <div class="col-auto">
+                        <span class="badge text-end" style="width: 100px">
+                            Average rank:
+                        </span>
+                    </div>
+                    <div class="col">
+                        {% if book.gbooks_rank %}
+                            <div class="badge">
+                                {{ book.gbooks_rank }}
+                            </div>
+                        {% else %}
+                            ...empty...
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="row row-cols-2 g-3">
+                    <div class="col-auto">
+                        <span class="badge text-end" style="width: 100px">
+                            Year:
+                        </span>
+                    </div>
+                    <div class="col">
+                        {% if book.year %}
+                            <div class="badge">
+                                {{ book.year }}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="row row-cols-2 g-3">
+                    <div class="col-auto">
+                        <span class="badge text-end" style="width: 100px">
+                            ISBN:
+                        </span>
+                    </div>
+                    <div class="col">
+                        {% if book.isbn %}
+                            <div class="badge">
+                                {{ book.isbn }}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="row row-cols-2 g-3">
+                    <div class="col-auto">
+                        <span class="badge text-end" style="width: 100px">
+                            Google ID:
+                        </span>
+                    </div>
+                    <div class="col">
+                        {% if book.gbooks_id %}
+                            <div class="badge">
+                                {{ book.gbooks_id }}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

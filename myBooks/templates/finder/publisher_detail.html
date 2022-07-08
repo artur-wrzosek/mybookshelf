@@ -1,0 +1,83 @@
+{% extends 'finder/main.html' %}
+{% block content %}
+<div class="container col col-sm-11 col-md-9 col-lg-7 justify-content-center">
+    <div class="card shadow my-3 ">
+        <div class="card-header h3 rounded-0">
+            <div class="row">
+                <div class="col text-center">
+                    {{ publisher.name }}
+                </div>
+            </div>
+        </div>
+
+        <div class="card-body text-start p-3">
+            <div class="row justify-content-center">
+                <div class="col col-xl-9">
+                    <div class="input-group mb-3">
+                        <div class="input-group-text justify-content-end">
+                            Name:
+                        </div>
+
+                        <div class="form-control" style="background-color: #FFFFFF">
+                            {{ publisher.name }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col col-xl-9">
+                    <div class="input-group mb-3">
+                        <div class="input-group-text justify-content-end">
+                            Id:
+                        </div>
+
+                        <div class="form-control" style="background-color: #FFFFFF">
+                            {{ publisher.id }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col col-xl-9">
+                    <div class="input-group mb-3">
+                        <div class="input-group-text justify-content-end">
+                            Added by:
+                        </div>
+
+                        <div class="form-control" style="background-color: #FFFFFF">
+                            {{ publisher.added_by }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col col-xl-9">
+                   <div class="input-group mb-3">
+                        <div class="input-group-text justify-content-end">
+                            Books:
+                        </div>
+
+                        <div class="form-control" style="background-color: #FFFFFF">
+                            {% for book in publisher.book_set.all %}
+                                <a class="btn badge" href="{% url 'book-detail' book.id %}">{{ book.title }}</a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-footer text-center">
+            <a href="{% url 'publisher-list' %}" class="btn" >
+                <i class="bi bi-arrow-left"></i> Back to list
+            </a>
+            <a href="{% url 'publisher-update' publisher.id %}" class="btn">
+                <i class="bi bi-arrow-clockwise"></i> Update
+            </a>
+            <a href="{% url 'publisher-delete' publisher.id %}" class="btn">
+                <i class="bi bi-trash"></i> Delete
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,5 @@
+<form method="POST" action="{% url 'vote-create' object.id %}">
+    {% csrf_token %}
+    {{ vote_form.value }}
+    <input type="submit" class="btn btn-sm" value="Vote!">
+</form>

@@ -1,0 +1,49 @@
+
+<nav class="navbar navbar-expand-sm navbar-dark shadow" style="background-color: #0AA2C0;">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="{% url 'main' %}"><i class="bi bi-bookshelf"></i> myBookshelf.rest</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent"
+            aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" style="" id="navbarContent">
+        <ul class="navbar-nav">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle active" id="navbarDropdown" data-bs-toggle="dropdown"
+               aria-expanded="false" href="" aria-current="page" >
+              Search
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown"
+            style="border-color: #0AA2C0;">
+              <li><a class="dropdown-item" href="{% url 'book-list' %}">Books</a></li>
+              <li><a class="dropdown-item" href="{% url 'author-list' %}">Authors</a></li>
+              <li><a class="dropdown-item" href="{% url 'category-list' %}">Categories</a></li>
+              <li><a class="dropdown-item" href="{% url 'publisher-list' %}">Publishers</a></li>
+              <li><a class="dropdown-item" href="{% url 'profile-list' %}">Profiles</a></li>
+            </ul>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'gbooks-list' %}">GoogleBooks</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">About</a>
+          </li>
+          {% if user.is_authenticated %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+          </li>
+          {% else %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'login' %}">Login</a>
+          </li>
+          {% endif %}
+        </ul>
+      <div class="col text-end text-white">
+        {% if user.is_authenticated %}
+          user: {{ user.profile.name }}
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</nav>

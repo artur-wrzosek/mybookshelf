@@ -1,0 +1,77 @@
+{% extends 'finder/main.html' %}
+{% block content %}
+
+<div class="container">
+<div class="card border-2 text-center shadow my-3">
+    <div class="card-header h3  position-relative">Update "{{ object.name }}"</div>
+    <div class="card-body p-0 pt-3">
+        <form method="POST">
+            {% csrf_token %}
+            <div class="row justify-content-center">
+
+                {% if form.errors %}
+                    {{ form.errors }}
+                {% endif %}
+
+                <div class="row justify-content-center">
+                    <div class="col col-md-10 col-lg-8">
+                        <div class="input-group mb-3">
+                            <div class="input-group-text border-0 text-white justify-content-end"
+                                  style="background-color: #0AA2C0; width: 150px;">
+                                {{ form.name.label }}:
+                            </div>
+                            <input
+                                type="{{ form.name.field.widget.input_type }}"
+                                class="form-control"
+                                name="{{ form.name.name }}"
+                                id="id_{{ form.name.name }}"
+                                placeholder="{{ form.name.field.widget.attrs.placeholder }}"
+                                aria-label="{{ form.name.label }}"
+                                value="{{ form.name.value|default:'' }}">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row justify-content-center">
+                    <div class="col col-md-10 col-lg-8">
+                        <div class="input-group mb-3">
+                            <div class="input-group-text border-0 text-white justify-content-end"
+                                  style="background-color: #0AA2C0; width: 150px;">
+                                {{ form.books.label }}:
+                            </div>
+                            {{ form.books }}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row justify-content-center">
+                    <div class="col col-md-10 col-lg-8">
+                        <div class="input-group mb-3">
+                            <div class="input-group-text border-0 text-white justify-content-end"
+                                  style="background-color: #0AA2C0; width: 150px;">
+                                {{ form.friends.label }}:
+                            </div>
+                            {{ form.friends }}
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+
+            <div class="card-footer text-center p-2">
+                <button type="submit" class="btn">
+                    <i class="bi bi-check-circle"></i> Update changes
+                </button>
+                <a href="{% url 'profile-detail' object.id %}" class="btn">
+                    <i class="bi bi-x-lg"></i> Cancel
+                </a>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+</div>
+{% endblock content %}

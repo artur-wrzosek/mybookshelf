@@ -1,0 +1,44 @@
+{% extends 'finder/main.html' %}
+
+{% block content %}
+<div class="container">
+    {% include 'finder/profile_search_form.html' %}
+</div>
+
+{% if is_paginated %}
+    {% include 'finder/pagination.html' %}
+{% endif %}
+
+<div class="container">
+    <div class="row">
+
+        {% for profile in object_list %}
+        <div class="col-12 col-xl-6">
+                {% include 'finder/profile_list_element.html' %}
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% if is_paginated %}
+    {% include 'finder/pagination.html' %}
+{% endif %}
+
+{% endblock content %}
+
+<ul>
+    {% for profile in object_list %}
+    <li>profile name: <a href="{% url 'profile-detail' profile.id %}">{{ profile.name }}</a></li>
+    <li>id: {{ profile.id }}</li>
+
+    <li>
+        books: {% for book in profile.books.all %}
+        <a href="{% url 'book-detail' book.id %}">{{ book }}</a>,
+        {% endfor %}
+    </li>
+
+    <br>
+    {% empty %}
+    <li>No objects yet.</li>
+    {% endfor %}
+</ul>

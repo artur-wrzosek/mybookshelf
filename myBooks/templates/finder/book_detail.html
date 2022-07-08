@@ -1,0 +1,122 @@
+{% extends 'finder/main.html' %}
+{% block content %}
+<div class="container col col-md-9 col-lg-8 justify-content-center">
+    <div class="card shadow my-3 ">
+        <div class="card-header h3 rounded-0">
+            <div class="row g-1">
+                <div class="col text-center">
+                    {{ book.title }} (id: {{ book.id }})
+                </div>
+
+                <div class="col-auto text-end">
+                    {% if user.is_authenticated %}
+                    <span>
+                        {% if book in user.profile.books.all %}
+                            <i class="bi bi-check-circle"></i>
+                        {% else %}
+                            <i class="bi bi-dash-circle"></i>
+                        {% endif %}
+                    </span>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <div class="card-body text-start p-3">
+            <div class="row row-cols-1 row-cols-md-2 justify-content-center">
+
+                <div class="col-3 col-md-auto" >
+                    <img src="{% if book.thumbnail %}{{ book.thumbnail }}{% else %}https://books.google.pl/googlebooks/images/no_cover_thumb.gif{% endif %}"
+                         style="min-width: 128px;" class="rounded shadow mb-3" alt="">
+                </div>
+
+                <div class="col col-md-9">
+                    {% for label, value in details.items %}
+
+                        <div class="input-group mb-3">
+                            <div class="input-group-text justify-content-end">
+                                {{ label }}:
+                            </div>
+
+                            <div class="form-control" id="id_{{ field.name }}" style="background-color: #FFFFFF">
+                                {% if label == 'authors' %}
+                                    {% for author in value %}
+                                        <a class="btn badge" href="{% url 'author-detail' author.id %}">{{ author.name }}</a>
+                                    {% endfor %}
+
+                                {% elif label == 'categories' %}
+                                    {% for category in value %}
+                                        <a class="btn badge" href="{% url 'category-detail' category.id %}">{{ category.name }}</a>
+                                    {% endfor %}
+
+                                {% elif label == 'publisher' and value is not None %}
+                                    <a class="btn badge" href="{% url 'publisher-detail' value.id %}">{{ value.name }}</a>
+                                {% elif value is None %}
+
+                                {% else %}
+                                    {{ value }}
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% endfor %}
+
+                    <div class="input-group mb-3">
+                        <div class="input-group-text justify-content-end">
+                            Votes:
+                        </div>
+                        <div class="form-control">
+                            {% if book.vote_set.all %}
+                                {% for vote in book.vote_set.all  %}
+                                    {{ vote.profile }} ({{ vote.value }}),
+                                {% endfor %}
+                            {% else %}
+                                ...empty...
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% if request.user.is_authenticated %}
+                        <div>
+                            <form method="POST" action="{% url 'vote-create' object.id %}">
+                                {% csrf_token %}
+                                <div class="input-group mb-3">
+                                    <div class="input-group-text justify-content-end">
+                                        Your vote:
+                                    </div>
+                                    {{ vote_form.value }}
+                                    <input type="submit" class="btn btn-sm" value="Vote!">
+                                </div>
+                            </form>
+                        </div>
+                        <div>
+                            <form method="POST" action="{% url 'profile-owned' user.profile.id object.id %}">
+                                {% csrf_token %}
+                                <div class="input-group mb-3">
+                                    <div class="input-group-text justify-content-end">
+                                        Owned:
+                                    </div>
+
+                                    {{ owned_form.owned }}
+                                    <input type="submit" class="btn btn-sm" value="Save">
+                                </div>
+                            </form>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+
+        </div>
+
+        <div class="card-footer text-center">
+            <a href="{% url 'book-list' %}" class="btn" >
+                <i class="bi bi-arrow-left"></i> Back to list
+            </a>
+            <a href="{% url 'book-update' object.id %}" class="btn">
+                <i class="bi bi-arrow-clockwise"></i> Update
+            </a>
+            <a href="{% url 'book-delete' object.id %}" class="btn">
+                <i class="bi bi-trash"></i> Delete
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock content %}

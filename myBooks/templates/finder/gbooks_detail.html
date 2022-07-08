@@ -1,0 +1,60 @@
+{% extends 'finder/main.html' %}
+{% block content %}
+<div class="container col col-md-9 col-lg-8 justify-content-center">
+    <div class="card shadow my-3 ">
+        <div class="card-header h3 rounded-0">
+            <div class="row">
+                <div class="col text-center">
+                    {{ book.title }}
+                </div>
+            </div>
+        </div>
+
+        <div class="card-body text-start p-3">
+            <div class="row row-cols-1 row-cols-md-2 justify-content-center">
+
+                <div class="col-3 col-md-auto" >
+                    <img src="{% if book.thumbnail %}{{ book.thumbnail }}{% else %}https://books.google.pl/googlebooks/images/no_cover_thumb.gif{% endif %}"
+                         style="min-width: 128px;" class="rounded shadow mb-3" alt="">
+                </div>
+
+                <div class="col col-md-9">
+                    {% for label, value in book.items %}
+
+                        <div class="input-group mb-3">
+                            <div class="input-group-text justify-content-end">
+                                {{ label|title }}:
+                            </div>
+
+                            <div class="form-control" id="id_{{ field.name }}" style="background-color: #FFFFFF">
+                                {% if label == 'authors' %}
+                                    {% for author in value %}
+                                        {{ author }},
+                                    {% endfor %}
+
+                                {% elif label == 'gbooks_link' %}
+                                    <a class="text-link text-black" href="{{ value }}" target="_blank">{{ value }}</a>
+
+                                {% else %}
+                                    {{ value }}
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% endfor %}
+
+                </div>
+            </div>
+
+        </div>
+
+        <div class="card-footer text-center">
+            <a href="{% url 'gbooks-list' %}" class="btn" >
+                <i class="bi bi-arrow-left"></i> Back to list
+            </a>
+            <a href="{% url 'book-create' book.gbooks_id %}" class="btn">
+                <i class="bi bi-plus-lg"></i> Add to myBookshelf
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock content %}

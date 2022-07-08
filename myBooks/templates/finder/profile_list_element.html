@@ -1,0 +1,76 @@
+<div class="card mb-3" id="card_{{ author.id }}" style="background-color: #ccf7ff">
+    <div class="card-header h3 position-relative rounded-0">
+        <div class="row">
+            <div class="col text-center">
+                <a class="stretched-link" href="{% url 'profile-detail' profile.id %}">
+                    {{ profile.name }}
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-body p-3" >
+        <div class="row ">
+            <div class="col-auto">
+                <span class="badge text-end" style="width: 100px">
+                    Name :
+                </span>
+            </div>
+            <div class="col">
+                <a class="btn badge" href="{% url 'profile-detail' profile.id %}">
+                    {{ profile.name }}
+                </a>
+            </div>
+
+        </div>
+        <div class="row ">
+            <div class="col-auto">
+                <span class="badge text-end" style="width: 100px">
+                    Id :
+                </span>
+            </div>
+            <div class="col">
+                <a class="btn badge" href="{% url 'profile-detail' profile.id %}">
+                    {{ profile.id }}
+                </a>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-auto">
+                <span class="badge text-end" style="width: 100px">
+                    Books :
+                </span>
+            </div>
+            <div class="col">
+                {% if profile.books.all %}
+                    {% for book in profile.books.all  %}
+                        <a class="btn badge" href="{% url 'book-detail' book.id %}">
+                            {{ book.title }}
+                        </a>
+                    {% endfor %}
+                {% else %}
+                    ...empty...
+                {% endif %}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-auto">
+                <span class="badge text-end" style="width: 100px">
+                    Friends :
+                </span>
+            </div>
+            <div class="col">
+                {% if profile.friends.all %}
+                    {% for profile in profile.friends.all  %}
+                        <a class="btn badge" href="{% url 'profile-detail' profile.id %}">
+                            {{ profile.name }}
+                        </a>
+                    {% endfor %}
+                {% else %}
+                    ...empty...
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>

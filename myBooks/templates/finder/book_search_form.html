@@ -1,0 +1,41 @@
+<div class="card text-center shadow my-3">
+    <form method="GET" action="{% url 'book-list' %}" >
+        <div class="card-header h3 position-relative rounded-0">Search for a Book</div>
+        <div class="card-body p-0 pt-3">
+            <div class="row row-cols-md-2 row-cols-xl-3 justify-content-center">
+                {% for field in form %}
+                <div class="row">
+                    <div class="col ">
+                        <div class="input-group mb-3">
+
+                            <div class="input-group-text">
+                                <div class="text-center">{{ field.label }}:</div>
+                            </div>
+
+                            <input type="{{ field.field.widget.input_type }}"
+                                   class="form-control rounded-end"
+                                   name="{{ field.name }}"
+                                   id="id_{{ field.name }}"
+                                   value="{{ field.value|default:'' }}"
+                                   placeholder="{{ field.field.widget.attrs.placeholder }}"
+                                   aria-label="{{ field.label }}">
+                        </div>
+                    </div>
+                </div>
+
+                {% endfor %}
+
+            </div>
+
+    </div>
+        <div class="card-footer py-3">
+                <button type="submit" class="btn">
+                    <i class="bi bi-search"></i> Search
+                </button>
+
+                <a href="{% url 'book-create' %}" class="btn">
+                    <i class="bi bi-plus-circle"></i> New book
+                </a>
+            </div>
+    </form>
+</div>

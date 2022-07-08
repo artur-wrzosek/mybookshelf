@@ -1,0 +1,83 @@
+{% extends 'finder/main.html' %}
+{% block content %}
+
+<div class="container col col-sm-11 col-md-9 col-lg-7 justify-content-center">
+    <div class="card shadow my-3 ">
+        <div class="card-header h3 rounded-0 text-center">
+            {{ profile.name }}
+        </div>
+
+        <div class="card-body text-start p-0">
+            <div class="row mx-1 mt-3 justify-content-center">
+                <div class="col">
+                    <div class="input-group mb-3">
+                        <div class="input-group-text justify-content-end">
+                            Name:
+                        </div>
+
+                        <div class="form-control" style="background-color: #FFFFFF">
+                            {{ profile.name }}
+                        </div>
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-text justify-content-end">
+                            Profile id:
+                        </div>
+                        <div class="form-control" style="background-color: #FFFFFF">
+                            {{ profile.id }}
+                        </div>
+                    </div>
+                    {% if request.user.is_authenticated %}
+                    <div class="input-group mb-3">
+                        <div class="input-group-text justify-content-end">
+                            Books:
+                        </div>
+                        <div class="form-control" style="background-color: #FFFFFF">
+                            {% for book in profile.books.all %}
+                                <a class="btn badge" href="{% url 'book-detail' book.id %}">{{ book.title }}</a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-text justify-content-end">
+                            Friends:
+                        </div>
+
+                        <div class="form-control" style="background-color: #FFFFFF">
+                            {% for friend in profile.friends.all %}
+                                <a class="btn badge" href="{% url 'profile-detail' profile.id %}">{{ friend.name }}</a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% if request.user.profile != profile %}
+                    <div>
+                        <form method="POST" action="{% url 'profile-friends' user.profile.id profile.id %}">
+                            {% csrf_token %}
+                            <div class="input-group mb-3">
+                                <div class="input-group-text justify-content-end">
+                                    Friends?:
+                                </div>
+                                    {{ friends_form.are_friends }}
+                                    <input type="submit" class="btn btn-sm" value="Save">
+                            </div>
+                        </form>
+                    </div>
+                    {% endif %}
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="card-footer text-center">
+                <a href="{% url 'profile-list' %}" class="btn" >
+                    <i class="bi bi-arrow-left"></i> Back to list
+                </a>
+                {% if profile.id == user.profile.id %}
+                <a href="{% url 'profile-update' profile.id %}" class="btn">
+                    <i class="bi bi-arrow-clockwise"></i> Update
+                </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

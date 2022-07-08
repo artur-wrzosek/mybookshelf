@@ -1,0 +1,9 @@
+{% block book_form %}
+<form action="" method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Add this book">
+</form>
+
+
+{% endblock book_form %}

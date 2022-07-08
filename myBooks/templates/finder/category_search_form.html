@@ -1,0 +1,45 @@
+<div class="card text-center shadow my-3">
+    <form method="GET" action="{% url 'category-list' %}" >
+        <div class="card-header h3 position-relative rounded-0">Search for a Category</div>
+        <div class="card-body p-3">
+            <div class="row row-cols-md-2 justify-content-center">
+                <div class="row">
+                    <div class="col ">
+                        <div class="input-group">
+
+                            <div class="input-group-text">
+                                <div class="text-center">{{ form.name.label }}:</div>
+                            </div>
+
+                            <input
+                                type="{{ form.name.field.widget.input_type }}"
+                                class="form-control rounded-end"
+                                name="{{ form.name.name }}"
+                                id="id_{{ form.name.name }}"
+                                placeholder="{{ form.name.field.widget.attrs.placeholder }}"
+                                aria-label="{{ form.name.label }}"
+                                value="{{ form.name.value|default:'' }}"
+                                list="datalistOptions{{ form.name.name }}">
+
+                            <datalist id="datalistOptions{{ form.name.name }}">
+                                {% for element in form.name.field.widget.attrs.extra %}
+                                    <option value="{{ element.name }}">
+                                {% endfor %}
+                            </datalist>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+    </div>
+        <div class="card-footer py-2">
+                <button type="submit" class="btn">
+                    <i class="bi bi-search"></i> Search
+                </button>
+
+                <a href="{% url 'category-create' %}" class="btn">
+                    <i class="bi bi-plus-circle"></i> New Category
+                </a>
+            </div>
+    </form>
+</div>

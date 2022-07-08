@@ -1,0 +1,27 @@
+{% extends 'finder/main.html' %}
+
+{% block content %}
+<div class="container">
+    {% include 'finder/publisher_search_form.html' %}
+</div>
+
+{% if is_paginated %}
+    {% include 'finder/pagination.html' %}
+{% endif %}
+
+<div class="container">
+    <div class="row">
+
+        {% for publisher in object_list %}
+        <div class="col-12 col-xl-6">
+                {% include 'finder/publisher_list_element.html' %}
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% if is_paginated %}
+    {% include 'finder/pagination.html' %}
+{% endif %}
+
+{% endblock content %}

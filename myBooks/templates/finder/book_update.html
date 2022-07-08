@@ -1,0 +1,61 @@
+{% extends 'finder/main.html' %}
+{% block content %}
+
+<div class="container">
+<div class="card border-2 text-center shadow my-3">
+    <div class="card-header h3  position-relative">Update "{{ object.title }}" (id: {{ object.id }})</div>
+    <div class="card-body p-0 pt-3">
+        <form method="POST">
+            {% csrf_token %}
+            <div class="row row-cols-md-2 row-cols-xl-3 justify-content-center">
+                {% for field in form %}
+
+                {% if field.errors %}
+                    {{ field.errors }}
+                {% endif %}
+
+                <div class="row">
+                    <div class="col ">
+                        <div class="input-group mb-3">
+                            <div class="input-group-text border-0 text-white"
+                                  style="background-color: #0AA2C0; width: 100px;">
+                                {{ field.label }}
+                            </div>
+                            <input
+                                type="{{ field.field.widget.input_type }}"
+                                class="form-control rounded-end"
+                                name="{{ field.name }}"
+                                id="id_{{ field.name }}"
+                                placeholder="{{ field.field.widget.attrs.placeholder }}"
+                                aria-label="{{ field.label }}"
+                                value="{{ field.value|default:'' }}"
+                                list="datalistOptions{{ field.name }}">
+
+                            <datalist id="datalistOptions{{ field.name }}">
+                                {% for element in field.field.widget.attrs.extra %}
+                                    <option value="{{ element.name }}">
+                                {% endfor %}
+                            </datalist>
+                        </div>
+                    </div>
+                </div>
+
+                {% endfor %}
+
+            </div>
+
+            <div class="card-footer text-center p-2">
+                <button type="submit" class="btn">
+                    <i class="bi bi-check-circle"></i> Update changes
+                </button>
+                <a href="{% url 'book-detail' object.id %}" class="btn">
+                    <i class="bi bi-x-lg"></i> Cancel
+                </a>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+</div>
+{% endblock content %}

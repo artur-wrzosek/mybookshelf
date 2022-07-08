@@ -1,0 +1,59 @@
+{% extends 'finder/main.html' %}
+{% block content %}
+
+<div class="container">
+<div class="row justify-content-sm-center">
+<div class="col-md-9 col-lg-6">
+<div class="card mx-auto my-3 shadow text-center">
+    <h3 class="card-header">Register new user</h3>
+    <div class="card-body py-4">
+
+        {% if form.errors %}
+            {% for error in form.errors.values %}
+                <div class="alert alert-danger" id="error_1">
+                    {{ error }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <form method="POST" action="{% url 'register' %}">
+            {% csrf_token %}
+            <div class="row justify-content-center">
+                {% for field in form %}
+                <div class="col-10 col-xl-8">
+                    <div class="input-group mb-3 shadow ">
+                        <div class="input-group-text border-0 text-white"
+                              style="background-color: #0AA2C0; width: 150px; text-align:center;">
+                            {% if field.name == 'password2' %}
+                            Password (confirm)
+                            {% else %}
+                            {{ field.label }}
+                            {% endif %}
+                        </div>
+
+                        <input type="{{ field.field.widget.input_type }}"
+                               class="form-control"
+                               name="{{ field.name }}"
+                               id="id_{{ field.name }}"
+                               value="{{ field.value|default:'' }}"
+                               placeholder="{{ field.field.widget.attrs.placeholder }}"
+                               aria-label="{{ field.label }}">
+                    </div>
+                </div>
+                {% endfor %}
+
+            </div>
+            <button type="submit" class="btn mt-2">
+                <i class="bi bi-person-check"></i> Register!
+            </button>
+        </form>
+    </div>
+  <div class="card-footer text-center">
+    Already have an account? <a class="badge btn" href="{% url 'login' %}">Log in!</a>
+  </div>
+</div>
+</div>
+</div>
+</div>
+
+{% endblock content %}

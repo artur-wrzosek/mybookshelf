@@ -1,0 +1,29 @@
+{% extends 'finder/main.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="card text-center shadow my-3">
+        <h3 class="card-header ">Confirm delete</h3>
+        <div class="card-body text-center p-0 "   style="color: #0AA2C0">
+
+          <form method="POST">
+            {% csrf_token %}
+              <div class="h5 my-5">Are you sure you want to delete Author:</div>
+              <div class="h3 mb-5">"{{ object.name }}"?</div>
+
+            <div class="card-footer text-center p-2">
+            <button class="btn"  type="submit" value="Confirm">
+              <i class="bi bi-trash"></i> Confirm
+            </button>
+
+            <a href="{% url 'author-detail' object.id %}" class="btn">
+                        <i class="bi bi-x-lg"></i> Cancel
+            </a>
+            </div>
+          </form>
+
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

@@ -1,0 +1,169 @@
+<!doctype html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+          rel="stylesheet" crossorigin="anonymous"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <title>myBookshelf</title>
+    <style>
+        body{
+<!--          background-color: #F5FDFE;-->
+          background-color: #ffffff;
+          --bs-primary: #0AA2C0;
+        }
+        select{
+          border-color:#0AA2C0;
+          border-width: 2px;
+          color: #0AA2C0;
+        }
+        a{
+          color:#ffffff;
+          text-decoration: none;
+        }
+        a:hover{
+          color:#ffffff;
+        }
+        .input-group-text{
+          border-width: 0;
+          background-color: #0AA2C0;
+          color: white;
+          width: 110px;
+        }
+        .form-control{
+            border-color: #0AA2C0;
+            border-width: 2px;
+        }
+        .form-control:focus{
+            border-color: #0AA2C0;
+            border-width: 2px;
+            box-shadow: 0 0 10px #0AA2C0;
+        }
+        .text-link:hover{
+          color: #ccf7ff;
+        }
+        .dropdown-menu{
+          border-width: 2px;
+          border-color: #0AA2C0;
+          box-shadow: 0 0 5px #0AA2C0;
+        }
+        .dropdown-item{
+          color: #0AA2C0;
+        }
+        .dropdown-item:hover{
+          color: #0AA2C0;
+          background-color: #ccf7ff;
+        }
+        .page-link{
+            border-color: #0AA2C0;
+            color: #ffffff;
+            border-width: 1.5px;
+            background-color: #0AA2C0;
+        }
+        .page-link:hover{
+            border-color: #0AA2C0;
+            color: #0AA2C0;
+            border-width: 1.5px;
+            background-color: #ffffff;
+            box-shadow: 0 0 10px #0AA2C0;
+        }
+        .page-item.active .page-link{
+          background-color: #ffffff;
+          border-color: #0AA2C0;
+          color: #0AA2C0;
+        }
+        .page-item.disabled .page-link{
+          border-width: 1.5px;
+          border-color: #0AA2C0;
+          background-color: #0AA2C0;
+          color: #ffffff;
+        }
+        .card{
+          color: #0AA2C0;
+          border-color: #0AA2C0;
+          background-color: #FFFFFF;
+          border-width: 3px;
+        }
+        .card:hover{
+          box-shadow: 0 0 10px #0AA2C0;
+        }
+        .card-header{
+          color: #ffffff;
+          border-width: 0px;
+          background-color: #0AA2C0;
+        }
+        .card-body{
+          color: #0AA2C0;
+          background-color: #ccf7ff;
+        }
+        .card-footer{
+          border-color: #0AA2C0;
+          border-width: 1.5px;
+          background-color: #ccf7ff;
+        }
+        .btn{
+          border-color: #0AA2C0;
+          border-width: 2px;
+          color: #ffffff;
+          background-color: #0AA2C0;
+        }
+        .btn:hover{
+          border-color: #0AA2C0;
+          border-width: 2px;
+          color: #0AA2C0;
+          background-color: #ffffff;
+          box-shadow: 0 0 10px #0AA2C0;
+        }
+        .btn:focus{
+          border-color: #0AA2C0;
+          border-width: 2px;
+          color: #0AA2C0;
+          background-color: #ffffff;
+          box-shadow: 0 0 15px #0AA2C0;
+        }
+        .btn-ok:hover{
+          color: white;
+          background-color: var(--bs-success);
+          border-color: var(--bs-success);
+        }
+        .btn-danger:hover{
+          color: white;
+          background-color: var(--bs-danger);
+          border-color: var(--bs-danger);
+        }
+        .badge{
+          color: #ffffff;
+          background-color: #0AA2C0;
+        }
+
+    </style>
+</head>
+<body>
+    {% include 'finder/navbar.html' %}
+
+    {% if messages %}
+
+        <div class="messages">
+            {% for message in messages %}
+                    <div class="alert mx-3 mt-2 {% if message.tags == 'error' %} alert-danger {% else %} alert-success {% endif %}"
+                         id="message_{{ forloop.counter }}"
+                         >
+                        {{ message }}
+                    </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    {% block content %}
+    {% endblock content %}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+            crossorigin="anonymous">
+    </script>
+</body>
+</html>

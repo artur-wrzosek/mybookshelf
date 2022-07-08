@@ -1,0 +1,136 @@
+<div class="card mb-3" id="card_{{ book.id }}" style="background-color: #ccf7ff">
+    <div class="card-header h3 position-relative rounded-0">
+        <div class="row g-1">
+            <div class="col text-center">
+                <a class="stretched-link" href="{% url 'book-detail' book.id %}">
+                    {{ book.title|truncatechars:30 }}
+                </a>
+            </div>
+
+            <div class="col-auto text-end">
+                {% if user.is_authenticated %}
+                <span>
+                    {% if book in user.profile.books.all %}
+                        <i class="bi bi-check-circle"></i>
+                    {% else %}
+                        <i class="bi bi-dash"></i>
+                    {% endif %}
+                </span>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="card-body p-0" >
+        <div class="row my-3">
+            <div class="col mx-3" style="max-width: 128px;">
+                <a href="{% url 'book-detail' book.id %}">
+                    <img src="{% if book.thumbnail %}{{ book.thumbnail }}{% else %}https://books.google.pl/googlebooks/images/no_cover_thumb.gif{% endif %}"
+                 style="min-width: 128px;"
+                 class="shadow"  alt="">
+                </a>
+            </div>
+            <div class="col">
+                <div class="row row-cols-2 g-3">
+                    <div class="col-auto">
+                        <span class="badge text-end" style="width: 100px">
+                            Title :
+                        </span>
+                    </div>
+                    <div class="col">
+                        <a class="btn badge" href="{% url 'book-detail' book.id %}">
+                            {{ book.title|truncatechars:25 }}
+                        </a>
+                    </div>
+
+                </div>
+                <div class="row row-cols-2 g-3">
+                    <div class="col-auto">
+                        <span class="badge text-end" style="width: 100px">
+                            Book id:
+                        </span>
+                    </div>
+                    <div class="col">
+                        <a class="btn badge" href="{% url 'book-detail' book.id %}">
+                            {{ book.id }}
+                        </a>
+                    </div>
+
+                </div>
+                <div class="row row-cols-2 g-3">
+                    <div class="col-auto">
+                        <span class="badge text-end" style="width: 100px">
+                            Authors :
+                        </span>
+                    </div>
+                    <div class="col">
+                        {% if book.authors.all %}
+                            {% for author in book.authors.all  %}
+                                <a class="btn badge" href="{% url 'author-detail' author.id %}">
+                                    {{ author.name|truncatechars:25 }}
+                                </a>
+                            {% endfor %}
+                        {% else %}
+                            ...empty...
+                        {% endif %}
+                    </div>
+
+                </div>
+
+                <div class="row row-cols-2 g-3">
+                    <div class="col-auto">
+                        <span class="badge text-end" style="width: 100px">
+                            Categories :
+                        </span>
+                    </div>
+                    <div class="col">
+                        {% if book.categories.all %}
+                            {% for category in book.categories.all  %}
+                                <a class="btn badge" href="{% url 'category-detail' category.id %}">
+                                    {{ category.name|truncatechars:25 }}
+                                </a>
+                            {% endfor %}
+                        {% else %}
+                            ...empty...
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="row row-cols-2 g-3">
+                    <div class="col-auto">
+                        <span class="badge text-end" style="width: 100px">
+                            Publisher:
+                        </span>
+                    </div>
+                    <div class="col">
+                        {% if book.publisher %}
+                             <a class="btn badge" href="{% url 'publisher-detail' book.publisher.id %}">
+                                 {{ book.publisher.name|truncatechars:25 }}
+                             </a>
+                        {% else %}
+                            ...empty...
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="row row-cols-2 g-3">
+                    <div class="col-auto">
+                        <span class="badge text-end" style="width: 100px">
+                            Votes:
+                        </span>
+                    </div>
+                    <div class="col">
+                        {% if book.vote_set.all %}
+                            {% for vote in book.vote_set.all  %}
+                                <a class="btn badge">
+                                    {{ vote.profile }} : {{ vote.value }}
+                                </a>
+                            {% endfor %}
+                        {% else %}
+                            ...empty...
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
