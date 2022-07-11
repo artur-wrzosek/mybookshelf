@@ -28,11 +28,3 @@ class NameSearchFormTest(TestCase):
     def test_name_form_valid(self):
         form = NameSearchForm(data={'name': 'J.R.R. Tolkien'})
         self.assertTrue(form.is_valid())
-
-
-# class CreateUserFormTest(TestCase):
-#     def test_user_creation_form_valid(self):
-#         form_data = {'username': 'dummy', 'email': 'dummy@one.com', 'password1': 'DummyOne123',
-#                      'password2': 'DummyOne123'}
-#         form = CreateUserForm(data=form_data)
-#         self.assertTrue(form.is_valid())

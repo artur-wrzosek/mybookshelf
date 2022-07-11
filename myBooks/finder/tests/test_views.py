@@ -138,7 +138,6 @@ class ProfileUpdateViewTest(TestCase):
         book1 = models.Book.objects.create(title='First Book')
         uuid = self.user1.profile.id
         response = self.client.post(path='/profile/{}/update/'.format(uuid), data={'books': [book1.id]})
-        print(response.__dir__)
         self.assertEqual(response.url, '/profile/{}/'.format(uuid))
 
 
