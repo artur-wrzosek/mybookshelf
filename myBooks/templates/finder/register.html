@@ -3,15 +3,19 @@
 
 <div class="container">
 <div class="row justify-content-sm-center">
-<div class="col-md-9 col-lg-6">
+<div class="col-md-9 col-lg-8">
 <div class="card mx-auto my-3 shadow text-center">
     <h3 class="card-header rounded-0">Register new user</h3>
     <div class="card-body py-4">
 
         {% if form.errors %}
             {% for error in form.errors.values %}
-                <div class="alert alert-danger" id="error_1">
-                    {{ error }}
+                <div class="row">
+                    <div class="col">
+                        <div class="alert alert-danger p-2">
+                            <span>{{ error|striptags }}</span>
+                        </div>
+                    </div>
                 </div>
             {% endfor %}
         {% endif %}

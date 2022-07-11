@@ -10,7 +10,9 @@
             <div class="row justify-content-center">
 
                 {% if form.errors %}
-                    {{ form.errors }}
+                    <div class="row">
+                        <span>{{ field.errors }}</span>
+                    </div>
                 {% endif %}
 
                 <div class="row justify-content-center">

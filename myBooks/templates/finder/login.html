@@ -15,9 +15,13 @@
 
                 {% if form.errors %}
                     {% for error in form.errors.values %}
-                        <div class="alert alert-danger" id="error_1">
-                            {{ error }}
+                    <div class="row">
+                        <div class="col">
+                            <div class="alert alert-danger p-2">
+                                <span>{{ error|striptags }}</span>
+                            </div>
                         </div>
+                    </div>
                     {% endfor %}
                 {% endif %}
 

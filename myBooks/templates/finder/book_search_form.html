@@ -9,7 +9,9 @@
                         <div class="input-group mb-3">
 
                             <div class="input-group-text justify-content-end">
-                                <div class="text-center">{{ field.label }}:</div>
+                                <div class="text-center">
+                                    {{ field.label }}:
+                                </div>
                             </div>
 
                             <input type="{{ field.field.widget.input_type }}"
@@ -18,7 +20,14 @@
                                    id="id_{{ field.name }}"
                                    value="{{ field.value|default:'' }}"
                                    placeholder="{{ field.field.widget.attrs.placeholder }}"
-                                   aria-label="{{ field.label }}">
+                                   aria-label="{{ field.label }}"
+                                   list="datalistOptions{{ field.name }}">
+
+                            <datalist id="datalistOptions{{ field.name }}">
+                                {% for element in field.field.widget.attrs.extra %}
+                                    <option value="{{ element.name }}">
+                                {% endfor %}
+                            </datalist>
                         </div>
                     </div>
                 </div>

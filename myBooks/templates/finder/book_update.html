@@ -11,7 +11,9 @@
                 {% for field in form %}
 
                 {% if field.errors %}
-                    {{ field.errors }}
+                    <div class="row">
+                        <span>{{ field.errors }}</span>
+                    </div>
                 {% endif %}
 
                 <div class="row">
@@ -19,7 +21,7 @@
                         <div class="input-group mb-3">
                             <div class="input-group-text border-0 text-white"
                                   style="background-color: #0AA2C0; width: 100px;">
-                                {{ field.label }}
+                                {{ field.label }}:
                             </div>
                             <input
                                 type="{{ field.field.widget.input_type }}"
