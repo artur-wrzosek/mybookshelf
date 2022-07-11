@@ -4,7 +4,18 @@
 <div class="container col col-sm-11 col-md-9 col-lg-7 justify-content-center">
     <div class="card shadow my-3 ">
         <div class="card-header h3 rounded-0 text-center">
-            {{ profile.name }}
+            <div class="row">
+                <div class="col">
+                    {{ profile.name }}
+                </div>
+                <div class="col-auto">
+                    {% if user.profile in profile.friends.all %}
+                    <span>
+                        <i class="bi bi-person-check"></i>
+                    </span>
+                    {% endif %}
+                </div>
+            </div>
         </div>
 
         <div class="card-body text-start p-0">
@@ -28,7 +39,7 @@
                         </div>
                     </div>
                     {% if request.user.is_authenticated %}
-                    {% if user.profile in profile.friends.all %}
+                    {% if user.profile in profile.friends.all or request.user.profile == profile %}
                     <div class="input-group mb-3">
                         <div class="input-group-text justify-content-end">
                             Books:

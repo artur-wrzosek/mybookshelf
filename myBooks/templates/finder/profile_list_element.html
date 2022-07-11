@@ -3,8 +3,19 @@
         <div class="row">
             <div class="col text-center">
                 <a class="stretched-link" href="{% url 'profile-detail' profile.id %}">
-                    {{ profile.name }}
+                    {{ profile.name|truncatechars:30 }}
                 </a>
+            </div>
+             <div class="col-auto text-end">
+                {% if user.is_authenticated %}
+                <span>
+                    {% if user.profile in profile.friends.all %}
+                        <i class="bi bi-person-check"></i>
+                    {% else %}
+                        <i class="bi bi-dash"></i>
+                    {% endif %}
+                </span>
+                {% endif %}
             </div>
         </div>
     </div>
