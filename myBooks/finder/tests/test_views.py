@@ -126,7 +126,10 @@ class ProfileUpdateViewTest(TestCase):
         self.assertIsNotNone(self.user1.profile)
         self.assertFalse(self.user1.profile.books.exists())
         uuid = self.user1.profile.id
-        response = self.client.post(path='/profile/{}/update/'.format(uuid), data={'books': [book1.id, book2.id]})
+        response = self.client.post(path='/profile/{}/update/'.format(uuid), data={'name': 'dummy2',
+                                                                                   'books': [book1.id, book2.id]})
+        self.assertTrue(models.Profile.objects.get(name='dummy2'))
+        self.assertEqual(models.Profile.objects.get(id=uuid).name, 'dummy2')
         self.assertTrue(self.user1.profile.books.exists())
         self.assertTrue(self.user1.profile.books.contains(book1))
         self.assertTrue(self.user1.profile.books.contains(book2))
@@ -137,7 +140,9 @@ class ProfileUpdateViewTest(TestCase):
         logged1 = self.client.login(username='dummy1', password='123secret')
         book1 = models.Book.objects.create(title='First Book')
         uuid = self.user1.profile.id
-        response = self.client.post(path='/profile/{}/update/'.format(uuid), data={'books': [book1.id]})
+        response = self.client.post(path='/profile/{}/update/'.format(uuid), data={'name': 'dummy2'})
+        self.assertTrue(models.Profile.objects.get(name='dummy2'))
+        self.assertEqual(models.Profile.objects.get(id=uuid).name, 'dummy2')
         self.assertEqual(response.url, '/profile/{}/'.format(uuid))
 
 
@@ -337,35 +342,33 @@ class VoteCreateUpdateViewTest(TestCase):
         self.user = get_user_model().objects.create_user(username='dummy', password='123secret')
         models.Profile.objects.create(name=self.user.username, user=self.user)
         self.book = models.Book.objects.create(title='Hobbit', added_by=self.user.profile)
+        self.vote = models.Vote.objects.create(profile=self.user.profile, book=self.book, value=5)
 
     def test_adding_first_vote_authenticated_user(self):
         logged = self.client.login(username='dummy', password='123secret')
         self.assertTrue(logged)
-        self.assertFalse(models.Vote.objects.all().exists())
-        self.assertFalse(self.book.vote_set.all().exists())
-        response = self.client.post(path='/book/{}/vote/'.format(self.book.id), data={'value': 5})
+        self.assertEqual(self.book.vote_set.get(id=1).value, 5)
+        response = self.client.post(path='/book/{}/vote/'.format(self.book.id), data={'value': 10})
         self.assertRedirects(response, expected_url='/book/{}/'.format(self.book.id))
         self.assertTrue(models.Vote.objects.all().exists())
         self.assertTrue(self.book.vote_set.all().exists())
-        self.assertEqual(self.book.vote_set.get(id=1).value, 5)
+        self.assertEqual(self.book.vote_set.get(id=1).value, 10)
         self.assertEqual(self.book.vote_set.get(id=1).profile, self.user.profile)
 
     def test_adding_first_vote_authenticated_user_invalid_value(self):
         logged = self.client.login(username='dummy', password='123secret')
         self.assertTrue(logged)
-        self.assertFalse(models.Vote.objects.all().exists())
-        self.assertFalse(self.book.vote_set.all().exists())
+        # self.assertFalse(models.Vote.objects.all().exists())
+        # self.assertFalse(self.book.vote_set.all().exists())
         response = self.client.post(path='/book/{}/vote/'.format(self.book.id), data={'value': 12})
         self.assertEqual(response.status_code, 200)
         self.assertTrue(models.Vote.objects.all().exists())
         self.assertTrue(self.book.vote_set.all().exists())
-        self.assertIsNone(self.book.vote_set.get(id=1).value)
+        self.assertEqual(self.book.vote_set.get(id=1).value, 5)
 
     def test_update_first_vote_authenticated_user(self):
         logged = self.client.login(username='dummy', password='123secret')
         self.assertTrue(logged)
-        self.assertFalse(models.Vote.objects.all().exists())
-        self.assertFalse(self.book.vote_set.all().exists())
         response = self.client.post(path='/book/{}/vote/'.format(self.book.id), data={'value': 9})
         self.assertRedirects(response, expected_url='/book/{}/'.format(self.book.id))
         self.assertTrue(models.Vote.objects.all().exists())
@@ -375,13 +378,13 @@ class VoteCreateUpdateViewTest(TestCase):
 
     def test_adding_vote_unauthenticated_user(self):
         self.client.logout()
-        self.assertFalse(models.Vote.objects.all().exists())
-        self.assertFalse(self.book.vote_set.all().exists())
+        # self.assertFalse(models.Vote.objects.all().exists())
+        # self.assertFalse(self.book.vote_set.all().exists())
         response = self.client.post(path='/book/{}/vote/'.format(self.book.id), data={'value': 9})
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, '/login/?next=/book/{}/vote/'.format(self.book.id))
-        self.assertFalse(models.Vote.objects.all().exists())
-        self.assertFalse(self.book.vote_set.all().exists())
+        # self.assertFalse(models.Vote.objects.all().exists())
+        # self.assertFalse(self.book.vote_set.all().exists())
 
 
 class PublisherCreateViewTest(TestCase):
