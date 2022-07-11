@@ -25,20 +25,3 @@
 {% endif %}
 
 {% endblock content %}
-
-<ul>
-    {% for profile in object_list %}
-    <li>profile name: <a href="{% url 'profile-detail' profile.id %}">{{ profile.name }}</a></li>
-    <li>id: {{ profile.id }}</li>
-
-    <li>
-        books: {% for book in profile.books.all %}
-        <a href="{% url 'book-detail' book.id %}">{{ book }}</a>,
-        {% endfor %}
-    </li>
-
-    <br>
-    {% empty %}
-    <li>No objects yet.</li>
-    {% endfor %}
-</ul>

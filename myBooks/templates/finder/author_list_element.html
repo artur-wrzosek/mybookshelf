@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col text-center">
                 <a class="stretched-link" href="{% url 'author-detail' author.id %}">
-                    {{ author.name }}
+                    {{ author.name|truncatechars:30 }}
                 </a>
             </div>
         </div>
@@ -18,7 +18,7 @@
             </div>
             <div class="col">
                 <a class="btn badge" href="{% url 'author-detail' author.id %}">
-                    {{ author.name }}
+                    {{ author.name|truncatechars:30 }}
                 </a>
             </div>
 
@@ -46,7 +46,7 @@
                 {% if author.book_set.all %}
                     {% for book in author.book_set.all  %}
                         <a class="btn badge" href="{% url 'book-detail' book.id %}">
-                            {{ book.title }}
+                            {{ book.title|truncatechars:30 }}
                         </a>
                     {% endfor %}
                 {% else %}

@@ -59,7 +59,9 @@
 
                         <div class="form-control" style="background-color: #FFFFFF">
                             {% for book in author.book_set.all %}
-                                <a class="btn badge" href="{% url 'book-detail' book.id %}">{{ book.title }}</a>
+                                <a class="btn badge" href="{% url 'book-detail' book.id %}">
+                                    {{ book.title|truncatechars:30 }}
+                                </a>
                             {% endfor %}
                         </div>
                     </div>

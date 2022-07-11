@@ -36,6 +36,7 @@
             </div>
 
         </div>
+        {% if user.profile in profile.friends.all %}
         <div class="row">
             <div class="col-auto">
                 <span class="badge text-end" style="width: 100px">
@@ -72,5 +73,6 @@
                 {% endif %}
             </div>
         </div>
+        {% endif %}
     </div>
 </div>

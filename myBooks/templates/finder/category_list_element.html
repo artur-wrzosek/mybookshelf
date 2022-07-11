@@ -21,7 +21,7 @@
                 {% if category.book_set.all %}
                     {% for book in category.book_set.all  %}
                         <a class="btn badge" href="{% url 'book-detail' book.id %}">
-                            {{ book.title }}
+                            {{ book.title|truncatechars:30 }}
                         </a>
                     {% endfor %}
                 {% else %}

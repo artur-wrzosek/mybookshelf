@@ -35,22 +35,28 @@
 
                         <div class="input-group mb-3">
                             <div class="input-group-text justify-content-end">
-                                {{ label }}:
+                                {{ label|title }}:
                             </div>
 
                             <div class="form-control" id="id_{{ field.name }}" style="background-color: #FFFFFF">
                                 {% if label == 'authors' %}
                                     {% for author in value %}
-                                        <a class="btn badge" href="{% url 'author-detail' author.id %}">{{ author.name }}</a>
+                                        <a class="btn badge" href="{% url 'author-detail' author.id %}">
+                                            {{ author.name|truncatechars:30 }}
+                                        </a>
                                     {% endfor %}
 
                                 {% elif label == 'categories' %}
                                     {% for category in value %}
-                                        <a class="btn badge" href="{% url 'category-detail' category.id %}">{{ category.name }}</a>
+                                        <a class="btn badge" href="{% url 'category-detail' category.id %}">
+                                            {{ category.name|truncatechars:30 }}
+                                        </a>
                                     {% endfor %}
 
                                 {% elif label == 'publisher' and value is not None %}
-                                    <a class="btn badge" href="{% url 'publisher-detail' value.id %}">{{ value.name }}</a>
+                                    <a class="btn badge" href="{% url 'publisher-detail' value.id %}">
+                                        {{ value.name|truncatechars:30 }}
+                                    </a>
                                 {% elif value is None %}
 
                                 {% else %}

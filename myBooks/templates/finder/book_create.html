@@ -41,11 +41,21 @@
                             </datalist>
 
                         </div>
+
                     </div>
                 </div>
-
                 {% endfor %}
 
+                <div class="row">
+                    <div class="col">
+                        <div class="input-group mb-3">
+                            <div class="input-group-text justify-content-end">
+                                Owned:
+                            </div>
+                            {{ owned_form.owned }}
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div class="card-footer text-center p-2">

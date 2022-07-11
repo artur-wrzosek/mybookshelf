@@ -28,13 +28,16 @@
                         </div>
                     </div>
                     {% if request.user.is_authenticated %}
+                    {% if user.profile in profile.friends.all %}
                     <div class="input-group mb-3">
                         <div class="input-group-text justify-content-end">
                             Books:
                         </div>
                         <div class="form-control" style="background-color: #FFFFFF">
                             {% for book in profile.books.all %}
-                                <a class="btn badge" href="{% url 'book-detail' book.id %}">{{ book.title }}</a>
+                                <a class="btn badge" href="{% url 'book-detail' book.id %}">
+                                    {{ book.title|truncatechars:30 }}
+                                </a>
                             {% endfor %}
                         </div>
                     </div>
@@ -45,10 +48,13 @@
 
                         <div class="form-control" style="background-color: #FFFFFF">
                             {% for friend in profile.friends.all %}
-                                <a class="btn badge" href="{% url 'profile-detail' profile.id %}">{{ friend.name }}</a>
+                                <a class="btn badge" href="{% url 'profile-detail' profile.id %}">
+                                    {{ friend.name|truncatechars:30 }}
+                                </a>
                             {% endfor %}
                         </div>
                     </div>
+                    {% endif %}
                     {% if request.user.profile != profile %}
                     <div>
                         <form method="POST" action="{% url 'profile-friends' user.profile.id profile.id %}">
