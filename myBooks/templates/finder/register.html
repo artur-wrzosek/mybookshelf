@@ -26,12 +26,12 @@
                 {% for field in form %}
                 <div class="col-10 col-xl-8">
                     <div class="input-group mb-3 shadow ">
-                        <div class="input-group-text border-0 text-white"
+                        <div class="input-group-text border-0 text-white justify-content-end p-2"
                               style="background-color: #0AA2C0; width: 150px; text-align:center;">
                             {% if field.name == 'password2' %}
-                            Password (confirm)
+                            Password (confirm):
                             {% else %}
-                            {{ field.label }}
+                            {{ field.label }}:
                             {% endif %}
                         </div>
 

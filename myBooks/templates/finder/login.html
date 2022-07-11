@@ -28,9 +28,9 @@
                 {% for field in form %}
                 <div class="col-10 col-xl-8">
                     <div class="input-group my-2">
-                        <div class="input-group-text border-0 text-white"
+                        <div class="input-group-text border-0 text-white justify-content-end"
                               style="background-color: #0AA2C0; width: 100px;">
-                            {{ field.label }}
+                            {{ field.label }}:
                         </div>
 
                         <input type="{{ field.field.widget.input_type }}"
