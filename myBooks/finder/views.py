@@ -1,20 +1,15 @@
 from django.shortcuts import render, redirect
-from django.contrib import messages, admin
-from django.contrib.auth import login, authenticate, logout
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.models import User
+from django.contrib import messages
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.views.generic import TemplateView
-from django.views.generic.base import ContextMixin
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView, FormMixin, FormView
 from django.views.generic.list import ListView
 from django.urls import reverse, reverse_lazy
 from django.forms.models import model_to_dict
 from django.core.exceptions import ObjectDoesNotExist
-from django.http import JsonResponse, HttpResponse, HttpRequest
 
 from . import models
 from . import forms
@@ -252,10 +247,16 @@ class BookCreateView(GoogleBooksSerializerMixin, LoginRequiredMixin, SuccessMess
                     defaults={'added_by': self.request.user.profile})
                 new_book.categories.add(cat.id)
             new_book.save()
+
+        if 'owned' in self.request.POST:
+            if self.request.POST['owned'] == 'True':
+                self.request.user.profile.books.add(new_book.id)
+
         return super().form_valid(form)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context['owned_form'] = forms.ProfileBooksOwnedForm(data={'owned': False})
         return context
 
     def get_initial(self):
@@ -264,6 +265,7 @@ class BookCreateView(GoogleBooksSerializerMixin, LoginRequiredMixin, SuccessMess
             response = requests.get(url='https://www.googleapis.com/books/v1/volumes/' + self.kwargs.get('gbooks_id'))
             if response.status_code == 200:
                 initial = self.gbooks_serializer(response.json())
+                initial['authors'] = ','.join(initial['authors'])
         return initial
 
 
@@ -702,100 +704,3 @@ class GoogleBooksDetailView(GoogleBooksSerializerMixin, TemplateView):
             book = self.gbooks_serializer(response.json())
             context['book'] = book
         return context
-
-
-# def login_user(request):
-#     page = 'login'
-#     context = {'page': page}
-#
-#     if request.user.is_authenticated:
-#         return redirect('main')
-#
-#     if request.method == 'POST':
-#         username = request.POST['username']
-#         password = request.POST['password']
-#
-#         try:
-#             user = User.objects.get(username=username)
-#         except:
-#             messages.error(request, 'User name does not exist')
-#         user = authenticate(request, username=username, password=password)
-#         if user is not None:
-#             login(request, user)
-#             return redirect('main')
-#         else:
-#             messages.error(request, 'Username OR password is incorrect')
-#
-#     return render(request, 'finder/login_register.html', context)
-#
-#
-# def logout_user(request):
-#     logout(request)
-#     messages.success(request, 'User was loged out')
-#     return redirect('login')
-#
-#
-# def register_user(request):
-#     page = 'register'
-#     form = UserCreationForm()
-#     if request.method == 'POST':
-#         form = UserCreationForm(request.POST)
-#         if form.is_valid():
-#             user = form.save(commit=False)
-#             user.username = user.username.lower()
-#             user.save()
-#
-#             messages.success(request, 'User account was created!')
-#             login(request, user)
-#             return redirect('main')
-#         else:
-#             messages.error(request, 'An error occurred during registration')
-#
-#     context = {'page': page, 'form': form}
-#     return render(request, 'finder/login_register.html', context)
-#
-#
-# def book_detail(request, pk):
-#     book = models.Book.objects.get(id=pk)
-#     return render(request, 'book-detail', context={'book':book})
-#
-#
-# def create_publisher(request):
-#     if request.method == 'POST':
-#         publisher = models.Publisher(request.POST)
-#         print(request.POST)
-#         publisher.save()
-#         return redirect('book-detail')
-#
-#
-# def create_book(request):
-#     if request.method == 'POST':
-#         form = forms.BookCreateForm(request.POST)
-#         if form.is_valid():
-#             new_book = form.save(commit=False)
-#             pub, pub_created = models.Publisher.objects.get_or_create(name=request.POST['publisher'])
-#             new_book.publisher_id = pub.pk
-#             new_book.save()
-#             auth, auth_created = models.Author.objects.get_or_create(name=request.POST['authors'])
-#             new_book.authors.add(auth.id)
-#
-#             cat, cat_created = models.Category.objects.get_or_create(name=request.POST['categories'])
-#             new_book.categories.add(cat.id)
-#             new_book.save()
-#             return redirect('book-detail')
-#     else:
-#          form = forms.BookCreateForm()
-#     return render(request, 'finder/book_form.html', {'form': form})
-#
-#
-# def update_book(request, pk):
-#     book = models.Book.objects.get(id=pk)
-#     form = forms.BookCreateForm(instance=book)
-#     if request.method == 'POST':
-#         form = forms.BookCreateForm(request.POST, instance=book)
-#         if form.is_valid():
-#             return redirect('create-book')
-#     else:
-#          form = forms.BookCreateForm()
-#     return render(request, 'create-book', {'form': form})
-#

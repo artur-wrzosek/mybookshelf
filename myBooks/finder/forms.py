@@ -27,6 +27,7 @@ class BookCreateForm(forms.ModelForm):
             'isbn': forms.TextInput(attrs={'placeholder': '1234567890123'}),
             'year': forms.NumberInput(attrs={'placeholder': '1937'}),
             'description': forms.Textarea(attrs={'placeholder': 'A great tale!'}),
+            'thumbnail': forms.Textarea(attrs={'placeholder': 'https://example.jpg'}),
         }
 
     field_order = ['title', 'authors', 'categories', 'publisher', 'year', 'isbn', 'description', 'thumbnail']
@@ -36,11 +37,11 @@ class BookSearchForm(forms.Form):
     title = forms.CharField(label='Title', max_length=100, required=False, widget=forms.TextInput(
         attrs={'placeholder': 'Hobbit'}))
     authors = forms.CharField(label='Authors:', max_length=100, required=False, widget=forms.TextInput(
-        attrs={'placeholder': 'J.R.R. Tolkien'}))
+        attrs={'placeholder': 'J.R.R. Tolkien', 'extra': models.Author.objects.all()}))
     categories = forms.CharField(label='Categories', max_length=100, required=False, widget=forms.TextInput(
-        attrs={'placeholder': 'fantasy, children'}))
+        attrs={'placeholder': 'fantasy, children', 'extra': models.Category.objects.all()}))
     publisher = forms.CharField(label='Publisher', max_length=100, required=False, widget=forms.TextInput(
-        attrs={'placeholder': 'Mordor Inc.'}))
+        attrs={'placeholder': 'Mordor Inc.', 'extra': models.Publisher.objects.all()}))
     year = forms.IntegerField(label='Year', min_value=1800, max_value=date.today().year, required=False,
                               widget=forms.NumberInput(attrs={'placeholder': '1937'}))
     isbn = forms.CharField(label='ISBN', required=False, widget=forms.TextInput(
@@ -76,7 +77,6 @@ class ProfileSearchForm(forms.Form):
 
 
 class VoteForm(forms.ModelForm):
-
     class Meta:
         model = models.Vote
         fields = ['value']
@@ -107,10 +107,14 @@ class ProfileBooksOwnedForm(forms.ModelForm):
 
 
 class GoogleBooksForm(forms.Form):
-    title = forms.CharField(max_length=100, required=False)
-    authors = forms.CharField(max_length=100, required=False)
-    publisher = forms.CharField(max_length=100, required=False)
-    isbn = forms.CharField(label='ISBN', max_length=13, required=False)
+    title = forms.CharField(label='Title', max_length=100, required=False,
+                            widget=forms.TextInput(attrs={'placeholder': 'Hobbit'}))
+    authors = forms.CharField(label='Authors', max_length=100, required=False,
+                              widget=forms.TextInput(attrs={'placeholder': 'J.R.R. Tolkien'}))
+    publisher = forms.CharField(label='Publisher', max_length=100, required=False,
+                                widget=forms.TextInput(attrs={'placeholder': 'Mordor Inc.'}))
+    isbn = forms.CharField(label='ISBN', max_length=13, required=False,
+                           widget=forms.TextInput(attrs={'placeholder': '9876543210123'}))
 
 
 # class CreateUserForm(UserCreationForm):
