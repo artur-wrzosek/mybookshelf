@@ -5,7 +5,9 @@ Simple web application for collections of books. Still in development.
 * Tech stack:
   * Python 3.9
   * Django 4.0.1
-  * djangoRESTframework 3.13.1 
+  * djangoRESTframework 3.13.1
+  * HTML5
+  * CSS 3
   * SQLite
   * requests 2.27
   * Bootstrap 5.0
