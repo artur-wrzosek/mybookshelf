@@ -342,12 +342,13 @@ class VoteCreateUpdateViewTest(TestCase):
         self.user = get_user_model().objects.create_user(username='dummy', password='123secret')
         models.Profile.objects.create(name=self.user.username, user=self.user)
         self.book = models.Book.objects.create(title='Hobbit', added_by=self.user.profile)
-        self.vote = models.Vote.objects.create(profile=self.user.profile, book=self.book, value=5)
+        # self.vote = models.Vote.objects.create(profile=self.user.profile, book=self.book, value=5)
 
     def test_adding_first_vote_authenticated_user(self):
         logged = self.client.login(username='dummy', password='123secret')
         self.assertTrue(logged)
-        self.assertEqual(self.book.vote_set.get(id=1).value, 5)
+        self.assertFalse(models.Vote.objects.all().exists())
+        self.assertFalse(self.book.vote_set.all().exists())
         response = self.client.post(path='/book/{}/vote/'.format(self.book.id), data={'value': 10})
         self.assertRedirects(response, expected_url='/book/{}/'.format(self.book.id))
         self.assertTrue(models.Vote.objects.all().exists())
@@ -358,8 +359,8 @@ class VoteCreateUpdateViewTest(TestCase):
     def test_adding_first_vote_authenticated_user_invalid_value(self):
         logged = self.client.login(username='dummy', password='123secret')
         self.assertTrue(logged)
-        # self.assertFalse(models.Vote.objects.all().exists())
-        # self.assertFalse(self.book.vote_set.all().exists())
+        self.assertFalse(models.Vote.objects.all().exists())
+        self.assertFalse(self.book.vote_set.all().exists())
         response = self.client.post(path='/book/{}/vote/'.format(self.book.id), data={'value': 12})
         self.assertEqual(response.status_code, 200)
         self.assertTrue(models.Vote.objects.all().exists())
@@ -378,13 +379,13 @@ class VoteCreateUpdateViewTest(TestCase):
 
     def test_adding_vote_unauthenticated_user(self):
         self.client.logout()
-        # self.assertFalse(models.Vote.objects.all().exists())
-        # self.assertFalse(self.book.vote_set.all().exists())
+        self.assertFalse(models.Vote.objects.all().exists())
+        self.assertFalse(self.book.vote_set.all().exists())
         response = self.client.post(path='/book/{}/vote/'.format(self.book.id), data={'value': 9})
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, '/login/?next=/book/{}/vote/'.format(self.book.id))
-        # self.assertFalse(models.Vote.objects.all().exists())
-        # self.assertFalse(self.book.vote_set.all().exists())
+        self.assertFalse(models.Vote.objects.all().exists())
+        self.assertFalse(self.book.vote_set.all().exists())
 
 
 class PublisherCreateViewTest(TestCase):

@@ -426,8 +426,16 @@ class VoteCreateUpdateView(LoginRequiredMixin, UpdateView):
     def get_object(self, queryset=None):
         profile = self.request.user.profile
         book = models.Book.objects.get(id=self.kwargs['pk'])
-        obj, created = models.Vote.objects.get_or_create(profile=profile, book=book)
-        return obj
+        try:
+            vote = models.Vote.objects.get(profile=profile, book=book)
+        except ObjectDoesNotExist:
+            form = self.form_class(data={'profile': profile, 'book': book, 'value': self.request.POST.get('value')})
+            if form.is_valid():
+                vote = models.Vote.objects.create(profile=profile, book=book, value=self.request.POST.get('value'))
+            else:
+                messages.error(self.request, form.errors)
+                return redirect('book-detail', pk=book.id)
+        return vote
 
     def get_success_url(self):
         return reverse('book-detail', args=(self.object.book.pk,))
