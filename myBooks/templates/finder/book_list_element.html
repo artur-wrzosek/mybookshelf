@@ -22,7 +22,7 @@
     </div>
 
     <div class="card-body p-0" >
-        <div class="row row-cols-1 row-cols-sm-2 my-3">
+        <div class="row row-cols-1 row-cols-sm-2 my-3 justify-content-center text-center">
             <div class="col mx-3" style="max-width: 128px;">
                 <a href="{% url 'book-detail' book.id %}">
                     <img src="{% if book.thumbnail %}{{ book.thumbnail }}{% else %}https://books.google.pl/googlebooks/images/no_cover_thumb.gif{% endif %}"
