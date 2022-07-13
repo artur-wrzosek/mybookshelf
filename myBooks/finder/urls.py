@@ -6,6 +6,7 @@ urlpatterns = [
     path('', views.BookListView.as_view(), name='main'),
     path('api/', include('finder.api.urls')),
     path('login/', views.UserLoginView.as_view(), name='login'),
+    path('about/', views.AboutView.as_view(), name='about'),
     path('logout/', views.UserLogoutView.as_view(), name='logout'),
     path('register/', views.RegistrationView.as_view(), name='register'),
 

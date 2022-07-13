@@ -1,0 +1,94 @@
+{% extends 'finder/main.html' %}
+
+{% block content %}
+<div class="container col col-md-9 col-lg-8 justify-content-center">
+    <div class="card shadow my-3 ">
+        <div class="card-header h3 rounded-0 text-center">
+            <span>myBookshelf</span>
+        </div>
+        <div class="card-body text-center p-0">
+            <div class="row row-cols-1 justify-content-center">
+
+                <div class="col-10">
+                    <div class="input-group my-4">
+                        <div class="input-group-text justify-content-end">
+                            About:
+                        </div>
+                        <div class="form-control" style="background-color: #FFFFFF">
+                            Web application for personal collection of books
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-10">
+                    <div class="input-group mb-4">
+                        <div class="input-group-text justify-content-end">
+                            Created by:
+                        </div>
+                        <div class="form-control" style="background-color: #FFFFFF">
+                            <a class="btn" href="https://www.linkedin.com/in/arturwrzosek" target="_blank">
+                                linkedin.com/in/arturwrzosek
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-10">
+                    <div class="input-group mb-4">
+                        <div class="input-group-text justify-content-end">
+                            Hosted at:
+                        </div>
+                        <div class="form-control" style="background-color: #FFFFFF">
+                            <a class="btn " href="https://arturwrzosek.pythonanywhere.com" target="_blank">
+                                pythonanywhere.com
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-10">
+                    <div class="input-group mb-4">
+                        <div class="input-group-text justify-content-end">
+                            Github repo:
+                        </div>
+                        <div class="form-control" style="background-color: #FFFFFF">
+                            <a class="btn" href="https://github.com/artur-wrzosek/mybookshelf" target="_blank">
+                                github.com/artur-wrzosek/mybookshelf
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-10">
+                    <div class="input-group mb-4">
+                        <div class="input-group-text justify-content-end">
+                            Tech stack:
+                        </div>
+                        <div class="form-control" style="background-color: #FFFFFF">
+                              <div class="btn m-1">Python 3.9</div>
+                              <div class="btn m-1">Django 4.0.1</div>
+                              <div class="btn m-1">DRF 3.13.1</div>
+                              <div class="btn m-1">HTML5</div>
+                              <div class="btn m-1">CSS 3</div>
+                              <div class="btn m-1">SQLite</div>
+                              <div class="btn m-1">requests 2.27</div>
+                              <div class="btn m-1">Bootstrap v5.0</div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+        <div class="card-footer py-4 text-center">
+            New at myBookshelf?
+            <a class="badge btn" href="{% url 'register' %}">
+                Sign up
+            </a>
+            for more features!
+        </div>
+    </div>
+</div>
+
+
+{% endblock content %}

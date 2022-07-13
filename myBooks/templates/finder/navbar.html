@@ -1,7 +1,8 @@
-
 <nav class="navbar navbar-expand-sm navbar-dark shadow" style="background-color: #0AA2C0;">
   <div class="container-fluid">
-    <a class="navbar-brand" href="{% url 'main' %}"><i class="bi bi-bookshelf"></i> myBookshelf.rest</a>
+    <a class="navbar-brand" href="{% url 'main' %}">
+      <i class="bi bi-book textvert ps-2" style="writing-mode: vertical-rl;"></i>myBookshelf
+    </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent"
             aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -27,7 +28,7 @@
             <a class="nav-link" href="{% url 'gbooks-list' %}">GoogleBooks</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">About</a>
+            <a class="nav-link" href="{% url 'about' %}">About</a>
           </li>
           {% if user.is_authenticated %}
           <li class="nav-item">

@@ -712,3 +712,7 @@ class GoogleBooksDetailView(GoogleBooksSerializerMixin, TemplateView):
             book = self.gbooks_serializer(response.json())
             context['book'] = book
         return context
+
+
+class AboutView(TemplateView):
+    template_name = 'finder/about.html'
