@@ -121,8 +121,8 @@
                     <div class="col">
                         {% if book.vote_set.all %}
                             {% for vote in book.vote_set.all  %}
-                                <a class="btn badge">
-                                    {{ vote.profile }} : {{ vote.value }}
+                                <a class="btn badge" href="{% url 'profile-detail' vote.profile.id %}">
+                                    {{ vote.profile.name }} ({{ vote.value }})
                                 </a>
                             {% endfor %}
                         {% else %}
