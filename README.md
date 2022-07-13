@@ -1,5 +1,5 @@
 # myBookshelf
-Simple web application for collections of books. Still in development.
+Simple web application for personal collection of books. Still in development.
 * Created by: www.linkedin.com/in/arturwrzosek
 * Application is hosted at: http://arturwrzosek.pythonanywhere.com/
 * Tech stack:
