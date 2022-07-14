@@ -22,15 +22,15 @@
     </div>
 
     <div class="card-body p-3" >
-        <div class="row row-cols-1 row-cols-sm-2 justify-content-center">
-            <div class="col mx-3 mb-3" style="max-width: 128px;">
+        <div class="row row-cols-1 row-cols-sm-2 justify-content-center justify-content-md-start">
+            <div class="col-auto  mb-3" style="max-width: 128px;">
                 <a href="{% url 'book-detail' book.id %}">
                     <img src="{% if book.thumbnail %}{{ book.thumbnail }}{% else %}https://books.google.pl/googlebooks/images/no_cover_thumb.gif{% endif %}"
                  style="min-width: 128px;"
                  class="shadow"  alt="">
                 </a>
             </div>
-            <div class="col mx-3">
+            <div class="col ">
                 <div class="row row-cols-2  g-2 justify-content-center">
                     <div class="col-auto">
                         <span class="badge text-end" style="width: 80px">
